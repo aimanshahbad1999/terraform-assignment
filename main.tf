@@ -53,6 +53,11 @@ module "ec2"{
     source= "./modules/ec2"
     pri1-sub= module.subnet.pri1-sub-id
     ec2-sg=module.security-group.pri-ec2-sg-id
+    pub1-sub=module.subnet.pub1-sub-id
+
+
+    pub-ec2-sg=module.security-group.pub-ec2-sg-id
+
 }
 
 module "alb"{
@@ -63,6 +68,14 @@ module "alb"{
     vpc_id=module.vpc.id
     ec2-id=module.ec2.id
 
-
 }
 
+
+module "rds"{
+    source= "./modules/rds"
+    pub1_sub=module.subnet.pub1-sub-id
+    pub2_sub=module.subnet.pub2-sub-id
+    pri1_sub=module.subnet.pri1-sub-id
+    pri2_sub=module.subnet.pri2-sub-id
+    rds-sg= module.security-group.rds-sg-id
+}
